@@ -1,0 +1,84 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: healthcare-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: healthcare
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+      interval: 10s
+      start_period: 10s
+
+  consul:
+    image: consul:1.15
+    container_name: healthcare-consul
+    ports:
+      - "8500:8500"
+    command: agent -dev -client=0.0.0.0
+    healthcheck:
+      test: "curl --fail --silent localhost:8500/v1/status/leader | grep . || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  configserver:
+    image: gleezzz7/config-server
+    container_name: config-server-ms
+    ports:
+      - "8888:8888"
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  patient-service:
+    image: gleezzz7/patient-service
+    container_name: patient-ms
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/healthcare
+    depends_on:
+      configserver:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+  user-service:
+    image: gleezzz7/user-service
+    container_name: user-ms
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8888
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/healthcare
+    depends_on:
+      configserver:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql-data:

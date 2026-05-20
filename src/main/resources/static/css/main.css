@@ -1,0 +1,386 @@
+/* --- Variables globales & Design Système --- */
+:root {
+    --primary-color: #0284c7;      /* Bleu médical lumineux */
+    --primary-hover: #0369a1;      /* Bleu foncé pour le survol */
+    --bg-gradient: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%); /* Fond doux dégradé */
+    --card-bg: #ffffff;
+    --text-main: #1e293b;          /* Ardoise foncé pour la lisibilité */
+    --text-muted: #64748b;
+    --error-color: #ef4444;        /* Rouge alerte */
+    --error-bg: #ffeeef;
+    --radius: 12px;
+    --shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1), 0 8px 10px -6px rgba(2, 132, 199, 0.1);
+}
+
+/* --- Reset & Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+}
+
+/* --- Conteneur de Carte (Login & Signup) --- */
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* --- Formulaires & Inputs --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+}
+
+/* --- Boutons --- */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+/* --- Messages d'erreur --- */
+.error-message {
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    font-weight: 500;
+}
+
+/* --- Pied de page --- */
+.login-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.login-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-footer a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* --- Page d'accueil (Home Card) --- */
+.home-card {
+    background: var(--card-bg);
+    padding: 50px 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.welcome-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.role-badge {
+    display: inline-block;
+    background-color: #e0f2fe;
+    color: var(--primary-color);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-logout {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-logout:hover {
+    background-color: #f1f5f9;
+    color: var(--error-color);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* --- Media Queries pour le Responsive --- */
+
+/* Pour les tablettes et smartphones (écrans inférieurs à 480px) */
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Évite que la carte colle aux bords de l'écran */
+        align-items: flex-start; /* Permet de scroller plus facilement si le clavier virtuel s'ouvre */
+        padding-top: 40px;
+    }
+
+    .login-container {
+        padding: 0; /* On optimise l'espace disponible */
+    }
+
+    .login-card, .home-card {
+        padding: 30px 20px; /* On réduit un peu les paddings internes */
+        border-radius: 10px;
+    }
+
+    h2 {
+        font-size: 24px; /* Un titre un poil plus petit pour éviter les retours à la ligne bizarres */
+    }
+
+    input {
+        padding: 10px 14px; /* Des champs légèrement plus compacts pour les petits doigts */
+        font-size: 14px;
+    }
+
+    .btn-submit {
+        padding: 12px;
+        font-size: 15px;
+    }
+}
+
+/* --- Structure Dashboard (Navbar + Content) --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: var(--card-bg);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.user-role {
+    background-color: #e0f2fe;
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-nav-logout {
+    padding: 8px 16px;
+    background-color: #fff1f2;
+    color: var(--error-color);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-nav-logout:hover {
+    background-color: var(--error-color);
+    color: white;
+}
+
+/* Alignement du contenu sous la navbar fixe */
+.dashboard-content {
+    margin-top: 90px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 30px 0;
+}
+
+/* Grille d'actions pour la suite de ton projet */
+.quick-actions h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+.action-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+}
+
+.action-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.action-title {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* --- Ajustement Media Query existant --- */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0 15px;
+    }
+    .user-role {
+        display: none; /* Cache le badge sur mobile pour gagner de la place */
+    }
+    .dashboard-content {
+        margin-top: 80px;
+        padding: 10px;
+    }
+    .dashboard-card {
+        padding: 25px 15px;
+    }
+}
+
+/* Optionnel : Pour les très petits téléphones (écrans inférieurs à 360px) */
+@media (max-width: 360px) {
+    h2 {
+        font-size: 21px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+    }
+}

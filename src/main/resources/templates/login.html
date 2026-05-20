@@ -2,30 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare - Connexion</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Connexion</h2>
 
-<div th:if="${param.error}">
-    <p style="color:red">Identifiants incorrects.</p>
-</div>
-<div th:if="${param.logout}">
-    <p style="color:green">Déconnexion réussie.</p>
-</div>
+<div class="login-container">
+    <div class="login-card">
+        <h2>⚕️ Healthcare</h2>
+        <p class="subtitle">Connectez-vous à votre espace médical</p>
 
-<form th:action="@{/login}" method="post">
-    <div>
-        <label>Nom d'utilisateur</label>
-        <input type="text" name="username" required/>
+        <div th:if="${param.error}" class="error-message">
+            Identifiants incorrects. Veuillez réessayer.
+        </div>
+
+        <div th:if="${param.logout}" class="error-message" style="background-color: #f0fdf4; color: #16a34a; border-color: rgba(22, 163, 74, 0.2);">
+            Vous avez été déconnecté avec succès.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" placeholder="ex: drsmith" required autocomplete="username"/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password"/>
+            </div>
+
+            <button type="submit" class="btn-submit">Se connecter</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Pas encore de compte ? <a th:href="@{/signup}">Créer un compte</a></p>
+        </div>
     </div>
-    <div>
-        <label>Mot de passe</label>
-        <input type="password" name="password" required/>
-    </div>
-    <button type="submit">Se connecter</button>
-</form>
+</div>
 
-<a th:href="@{/signup}">Pas de compte ? S'inscrire</a>
 </body>
 </html>

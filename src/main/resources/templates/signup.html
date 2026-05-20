@@ -2,23 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare - Inscription</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Créer un compte médecin</h2>
 
-<form th:action="@{/signup}" th:object="${user}" method="post">
-    <div>
-        <label>Nom d'utilisateur</label>
-        <input type="text" th:field="*{username}" required/>
-    </div>
-    <div>
-        <label>Mot de passe</label>
-        <input type="password" th:field="*{password}" required/>
-    </div>
-    <button type="submit">S'inscrire</button>
-</form>
+<div class="login-container">
+    <div class="login-card">
+        <h2>⚕️ Healthcare</h2>
+        <p class="subtitle">Créez votre compte professionnel</p>
 
-<a th:href="@{/login}">Déjà un compte ? Se connecter</a>
+        <form th:action="@{/signup}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" th:field="*{username}" id="username" placeholder="ex: drsmith" required autocomplete="username"/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" th:field="*{password}" id="password" placeholder="••••••••" required autocomplete="new-password"/>
+            </div>
+
+            <button type="submit" class="btn-submit">S'inscrire</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Déjà inscrit ? <a th:href="@{/login}">Se connecter</a></p>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil</title>
+</head>
+<body>
+<h2>Bienvenue <span sec:authentication="name"></span> 👋</h2>
+<p>Vous êtes connecté en tant que médecin.</p>
+
+<form th:action="@{/logout}" method="post">
+  <button type="submit">Se déconnecter</button>
+</form>
+</body>
+</html>

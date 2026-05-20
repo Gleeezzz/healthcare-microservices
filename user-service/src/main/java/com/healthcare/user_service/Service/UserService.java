@@ -3,6 +3,7 @@ package com.healthcare.user_service.Service;
 import com.healthcare.user_service.entity.User;
 import com.healthcare.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -26,13 +28,14 @@ public class UserService {
     }
 
     public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public Optional<User> update(Long id, User updated) {
         return userRepository.findById(id).map(existing -> {
             existing.setUsername(updated.getUsername());
-            existing.setPassword(updated.getPassword());
+            existing.setPassword(passwordEncoder.encode(updated.getPassword()));
             existing.setRole(updated.getRole());
             return userRepository.save(existing);
         });

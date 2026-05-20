@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare - Gestion des Patients</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a th:href="@{/home}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+            <span>⚕️</span> Healthcare Portal
+        </a>
+    </div>
+    <div class="nav-user">
+        <span class="user-name" th:text="${#authentication.name}">drsmith</span>
+        <span class="user-role">Médecin</span>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn-nav-logout">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+
+<main class="dashboard-content" style="max-width: 1000px;">
+    <div class="dashboard-card" style="text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>📋 Liste des Patients</h2>
+            <a th:href="@{/home}" class="btn-logout" style="padding: 8px 16px;">⬅️ Retour</a>
+        </div>
+
+        <div th:if="${errorService}" class="error-message" th:text="${errorService}">
+            Message d'erreur.
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="patient-table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Genre</th>
+                    <th>Date de Naissance</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Adresse</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(patients)}">
+                    <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                        Aucun patient enregistré dans le système.
+                    </td>
+                </tr>
+                <tr th:each="p : ${patients}">
+                    <td style="font-weight: 600;" th:text="${p.lastName}">DUPONT</td>
+                    <td th:text="${p.firstName}">Jean</td>
+                    <td>
+                        <span th:class="${p.gender == 'M' || p.gender == 'Homme' ? 'badge-m' : 'badge-f'}" th:text="${p.gender}">M</span>
+                    </td>
+                    <td th:text="${p.birthDate}">01/01/1980</td>
+                    <td th:text="${p.phone}">0601020304</td>
+                    <td th:text="${p.email}">jean.dupont@email.com</td>
+                    <td th:text="${p.address}">12 Rue de la Paix, Paris</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

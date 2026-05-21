@@ -26,9 +26,14 @@
 
 <main class="dashboard-content" style="max-width: 1000px;">
     <div class="dashboard-card" style="text-align: left;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
             <h2>📋 Liste des Patients</h2>
-            <a th:href="@{/home}" class="btn-logout" style="padding: 8px 16px;">⬅️ Retour</a>
+            <div style="display: flex; gap: 10px;">
+                <a th:href="@{/patients/add}" class="btn-action-add">
+                    <span>➕</span> Ajouter un Patient
+                </a>
+                <a th:href="@{/home}" class="btn-logout" style="padding: 8px 16px; text-decoration: none; font-size: 14px; display: flex; align-items: center;">⬅️ Retour</a>
+            </div>
         </div>
 
         <div th:if="${errorService}" class="error-message" th:text="${errorService}">
@@ -58,7 +63,7 @@
                     <td style="font-weight: 600;" th:text="${p.lastName}">DUPONT</td>
                     <td th:text="${p.firstName}">Jean</td>
                     <td>
-                        <span th:class="${p.gender == 'M' || p.gender == 'Homme' ? 'badge-m' : 'badge-f'}" th:text="${p.gender}">M</span>
+                    <span th:class="${p.gender == 'M' || p.gender == 'Homme' ? 'badge-m' : 'badge-f'}" th:text="${#strings.substring(p.gender, 0, 1)}">M</span>
                     </td>
                     <td th:text="${p.birthDate}">01/01/1980</td>
                     <td th:text="${p.phone}">0601020304</td>

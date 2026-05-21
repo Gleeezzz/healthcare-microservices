@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare - Nouveau Patient</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a th:href="@{/home}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+            <span>⚕️</span> Healthcare Portal
+        </a>
+    </div>
+    <div class="nav-user">
+        <span class="user-name" th:text="${#authentication.name}">drsmith</span>
+        <span class="user-role">Médecin</span>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn-nav-logout">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+
+<main class="dashboard-content" style="max-width: 800px;">
+    <div class="dashboard-card" style="text-align: left;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2>👤 Enregistrer un nouveau patient</h2>
+            <a th:href="@{/patients}" class="btn-logout" style="padding: 8px 16px; text-decoration: none; font-size: 14px;">Annuler</a>
+        </div>
+
+        <div th:if="${error}" class="error-message" th:text="${error}">
+            Erreur de création.
+        </div>
+
+        <form th:action="@{/patients/add}" th:object="${patient}" method="post">
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;">
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="lastName">Nom</label>
+                    <input type="text" th:field="*{lastName}" id="lastName" placeholder="ex: DUPONT" required />
+                </div>
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="firstName">Prénom</label>
+                    <input type="text" th:field="*{firstName}" id="firstName" placeholder="ex: Jean" required />
+                </div>
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="gender">Genre</label>
+                    <select th:field="*{gender}" id="gender" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 14px; background-color: #f8fafc;">
+                        <option value="">Sélectionnez le genre...</option>
+                        <option value="M">Homme</option>  <option value="F">Femme</option>  <option value="A">Autre</option>  </select>
+                </div>
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="birthDate">Date de naissance</label>
+                    <input type="date" th:field="*{birthDate}" id="birthDate" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 14px; background-color: #f8fafc;" />
+                </div>
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" th:field="*{phone}" id="phone" placeholder="ex: 0612345678" pattern="^[0-9]{10}$" title="Veuillez entrer un numéro de 10 chiffres" required />
+                </div>
+
+                <div class="form-group" style="margin: 0;">
+                    <label for="email">Adresse Email</label>
+                    <input type="email" th:field="*{email}" id="email" placeholder="ex: jean.dupont@email.com" required />
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label for="address">Adresse postale</label>
+                <input type="text" th:field="*{address}" id="address" placeholder="ex: 12 Rue de la Paix, Paris" required />
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn-submit" style="margin: 0; width: auto; padding: 12px 30px;">💾 Sauvegarder le Patient</button>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+</body>
+</html>

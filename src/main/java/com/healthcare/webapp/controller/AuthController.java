@@ -60,4 +60,26 @@ public class AuthController {
         }
         return "patients"; // Redirige vers le nouveau template patients.html
     }
+
+    // 1. Afficher le formulaire d'ajout
+    @GetMapping("/patients/add")
+    public String showAddPatientForm(Model model) {
+        model.addAttribute("patient", new PatientModel());
+        return "add-patient"; // Le nom de notre futur fichier HTML
+    }
+
+    // 2. Traiter les données envoyées par le formulaire
+    @PostMapping("/patients/add")
+    public String addPatient(@ModelAttribute("patient") PatientModel patient, Model model) {
+        try {
+            // On envoie les données au microservice via Feign
+            patientClient.createPatient(patient);
+            // Si ça marche, on redirige vers la liste des patients avec un message de succès
+            return "redirect:/patients";
+        } catch (Exception e) {
+            // Si le microservice rejette la demande ou est en panne
+            model.addAttribute("error", "Erreur lors de la création du patient. Veuillez vérifier les informations.");
+            return "add-patient"; // On reste sur le formulaire pour ne pas perdre les saisies
+        }
+    }
 }

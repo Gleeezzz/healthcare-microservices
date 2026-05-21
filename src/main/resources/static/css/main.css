@@ -421,6 +421,39 @@ input:focus {
     }
 }
 
+/* --- Boutons d'action dans le tableau de patients --- */
+
+/* Style de base pour les boutons d'action (Add et Retour) */
+.btn-action-add,
+.btn-logout {
+    padding: 6px 12px; /* Réduction de taille */
+    text-decoration: none;
+    font-size: 13px; /* Plus discret */
+    border-radius: 6px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Le bouton "Ajouter un Patient" : Jaune HEX FFCC00 */
+.btn-action-add {
+    background-color: #FFCC00;
+    color: #1a1a1a; /* Texte noir pour contraste */
+}
+
+.btn-action-add:hover {
+    background-color: #e6b800; /* Légèrement plus sombre au survol */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Harmonisation du bouton "Retour" */
+.btn-logout {
+    margin: 0; /* Aligne sur les autres boutons */
+}
+
 /* Optionnel : Pour les très petits téléphones (écrans inférieurs à 360px) */
 @media (max-width: 360px) {
     h2 {
